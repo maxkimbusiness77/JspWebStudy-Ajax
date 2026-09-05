@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xhr 방식</title>
+</head>
+<body>
+    <h1>xhr 방식</h1>
+    <ul id="categoryList"></ul>
+    <script>
+        const getCategories = function(callback) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://dummyjson.com/products/categories', true);
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    callback(null, JSON.parse(xhr.responseText));
+                }
+                else {
+                    callback(new Error('Request failed: ' + xhr.status));
+                }
+            };
+
+            xhr.onerror = function() {
+                callback(new Error('No Response!'));
+            
+            }
+            xhr.send();
+        }
+        const renderCategories = function(categories){
+            let ul = document.getElementById('categoryList');
+            for(let i = 0;i < categories.length;i++)
+            {
+                let li = document.createElement('li');
+                li.textContent = categories[i].name;
+                ul.appendChild(li);
+            }
+        }
+        getCategories(function(error, categories) {
+            if (error)
+            { 
+                return console.error(error);
+            }
+            renderCategories(categories);
+        });
+    </script>
+</body>
+</html>

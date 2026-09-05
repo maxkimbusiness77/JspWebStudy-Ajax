@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axios 방식</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Axios 방식</h1>
+    <ul id="categoryList"></ul>
+<!--
+ <script>
+        console.log('Promise 동작 테스트: ');
+        console.log('A');
+        axios.get('https://dummyjson.com/products/categories')
+            .then(response => {
+                const categories = response.data;
+
+                const ul = document.getElementById('categoryList');
+                for (let i=0;i<categories.length;i++)
+                {
+                    const li = document.createElement('li');
+                    li.textContent = categories[i].name;
+                    ul.appendChild(li);
+                }
+                console.log('B');
+            })
+            .catch(error => {
+                console.error('요청실패: ', error);
+            });
+            console.log('C');
+</script>
+-->
+<script>
+        console.log('Async/await 동작 테스트: ');
+        console.log('A');
+        async function getCategories() {
+            try {
+                const response = await axios.get('https://dummyjson.com/products/categories');
+                console.log('B');
+                const categories = response.data;
+
+                const ul = document.getElementById('categoryList');
+                for (let i = 0; i < categories.length; i++)
+                {
+                    const li = document.createElement('li');
+                    li.textContent = categories[i].name;
+                    ul.appendChild(li);
+                }
+            } catch (error) {
+                console.error('요청 실패:', error);
+            }
+            console.log('C');
+
+        }
+        getCategories();
+    </script>
+</body>
+</html>
